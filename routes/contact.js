@@ -53,6 +53,18 @@ router.put('/editContact/:_id', (req, res) => {
         .catch(err => console.log(err))
 })
 
+router.get("/sort/:favoriteFoods", (req, res) => {
+    const { favoriteFoods } = req.params;
+    const { name } = req.params;
+    Person.find({ favoriteFoods })
+    .sort({ name })
+    .limit(2)
+    .select({age: false})
+    .exec()
+    .then((users) => res.send(users))
+    .catch((err) => console.log(err))
+})
+
 router.delete('/deleteContact/:_id', (req, res) => {
     const { _id } = req.params
     Contact.findOneAndDelete({ _id })
