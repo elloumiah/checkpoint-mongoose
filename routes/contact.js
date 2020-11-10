@@ -65,6 +65,20 @@ router.get("/sort/:favoriteFoods", (req, res) => {
     .catch((err) => console.log(err))
 })
 
+router.put("/addFood/:_id", (req, res) => {
+      const { _id } = req.params;
+      Person.findOneAndUpdate(
+        { _id },
+        { addToSet: { favoriteFoods: "Hamburger" } },
+        {
+          new: true,
+          upsert: true,
+        }
+      )
+        .then((users) => res.send(users))
+        .catch((err) => console.log(err));
+    })
+
 router.delete('/deleteContact/:_id', (req, res) => {
     const { _id } = req.params
     Contact.findOneAndDelete({ _id })
